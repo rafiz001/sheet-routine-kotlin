@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -23,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,17 +40,28 @@ class MainActivity : ComponentActivity() {
         setContent {
             SheetRoutineTheme {
                 Scaffold(
+
                     topBar = {
                         TopAppBar(title = {
                             Text("Rafiz")
                         },
                             navigationIcon = {
                                 IconButton(onClick = {
-
+                                    Toast.makeText(this, "This is Rafiz", Toast.LENGTH_SHORT).show()
                                 }) {
                                     Icon(
                                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                         contentDescription = "Back"
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(onClick = {
+
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.MoreVert,
+                                        contentDescription = "More"
                                     )
                                 }
                             }
@@ -68,24 +82,23 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column(
+    val fiz = remember{
+        List(100){index ->
+            "Rafiz $index"
+        }
+    }
+    LazyColumn(
         modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            //.background(color = Color.Cyan)
-
     ) {
-        for (i in 0..100){
+        items(fiz.size){ index ->
             Text(
-                text = "Hello $name! $i",
-                color = Color.Cyan
-
+                text = "Hello ${fiz[index]} ",
+                modifier = Modifier.padding(bottom = 10.dp, top = 10.dp)
             )
             HorizontalDivider()
         }
-
-
     }
+
 
 }
 
